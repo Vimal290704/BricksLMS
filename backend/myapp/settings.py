@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "users",
     "rest_framework",
     "corsheaders",
+    "api"
 ]
 
 MIDDLEWARE = [
@@ -168,4 +169,12 @@ JAZZMIN_UI_TWEAKS = {
         "danger": "btn-danger",
         "success": "btn-success",
     },
+}
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
 }
