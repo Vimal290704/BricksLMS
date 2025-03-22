@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, FlatList , Animated } from "react-native";
 import OnboardingItem from "./OnboardingItem";
 import Paginator  from "./Paginator";
 import NextButton from "./NextButton";
-import slides from "../slides";
+import slides from "../../slides";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default Onboarding = () => {
