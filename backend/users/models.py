@@ -54,7 +54,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
+
     is_staff = models.BooleanField(default=False)
     role = models.CharField(
         max_length=10,
@@ -66,6 +68,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         choices=GENDER_CHOICES,
         default=MALE,
     )
+    last_login = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     school_id = models.CharField(max_length=20)
     avatar = models.OneToOneField(

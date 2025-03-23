@@ -47,6 +47,7 @@ class UserAdminConfig(UserAdmin):
                 "fields": (
                     "first_name",
                     "last_name",
+                    "date_of_birth",
                     "role",
                     "gender",
                     "school_id",
@@ -82,6 +83,7 @@ class UserAdminConfig(UserAdmin):
                 "fields": (
                     "first_name",
                     "last_name",
+                    "date_of_birth",
                     "role",
                     "gender",
                     "school_id",
