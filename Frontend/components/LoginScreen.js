@@ -1,73 +1,100 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().min(6, 'Too short!').required('Required'),
-});
-
-const LoginScreen = ({ navigation }) => {
-  const handleLogin = async (values) => {
-    await AsyncStorage.setItem('@userToken', 'valid_token');
-    Alert.alert('Success', 'Login Successful');
-    navigation.replace('Home');
-  };
-
+export default function LoginScreen() {
+  const clearOnboarding = async () => {
+     try{
+       await AsyncStorage.removeItem('isAppFirstLaunched');
+     }catch(error){
+       console.log(error)
+     }
+  }
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={LoginSchema}
-        onSubmit={handleLogin}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-          <>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              keyboardType="email-address"
-            />
-            {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
+    <LinearGradient colors={["#6a11cb", "#2575fc"]} style={styles.container}>
+      <View style={styles.waveTop} />
+      <Text style={styles.title}>Hello!</Text>
+      <Text style={styles.subtitle}>Enter details provided by your organisation</Text>
+      
+      <View style={styles.inputContainer}>
+        <TextInput placeholder="School Code" style={styles.input} placeholderTextColor="#aaa" />
+        <TextInput placeholder="Username" style={styles.input} placeholderTextColor="#aaa" />
+        <TextInput placeholder="Password" style={styles.input} secureTextEntry placeholderTextColor="#aaa" />
+      </View>
+      
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Sign in</Text>
+        <AntDesign name="arrowright" size={20} color="#fff" />
+      </TouchableOpacity>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-              secureTextEntry
-            />
-            {touched.password && errors.password && <Text style={styles.error}>{errors.password}</Text>}
+      <TouchableOpacity onPress={clearOnboarding}>
+        <Text style={styles.buttonText}>Skip</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-              <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-              <Text style={styles.link}>Don't have an account? Sign Up</Text>
-            </TouchableOpacity>
-          </>
-        )}
-      </Formik>
-    </View>
+      <View style={styles.waveBottom} />
+    </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  input: { width: 300, padding: 10, marginBottom: 10, borderWidth: 1, borderRadius: 5 },
-  button: { backgroundColor: '#F4338F', padding: 10, borderRadius: 5, width: 150, alignItems: 'center' },
-  buttonText: { color: '#fff', fontWeight: 'bold' },
-  error: { color: 'red', marginBottom: 5 },
-  link: { color: 'blue', marginTop: 10 },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#ddd",
+    marginBottom: 30,
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  input: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: 25,
+    padding: 15,
+    marginBottom: 15,
+    color: "#fff",
+  },
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#5a00b4",
+    padding: 15,
+    borderRadius: 25,
+    width: "80%",
+    justifyContent: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    marginRight: 10,
+  },
+  waveTop: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    height: 120,
+    backgroundColor: "#fff",
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+  waveBottom: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: 120,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+  },
 });
-
-export default LoginScreen;
