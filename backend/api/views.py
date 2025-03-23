@@ -15,14 +15,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["SchoolID"] = user.school_id
         token["firstname"] = user.first_name
         token["lastname"] = user.last_name
-        token["date_of_birth"] = user.date_of_birth
+        token["date_of_birth"] = str(user.date_of_birth) if user.date_of_birth else None
         token["id"] = user.id
         token["role"] = user.role
         token["gender"] = user.gender
         token["is_staff"] = user.is_staff
         token["is_active"] = user.is_active
-        token["created_at"] = user.created_at
-        token["last_login"] = user.last_login
+        token["created_at"] = str(user.created_at) if user.created_at else None
+        token["last_login"] = str(user.last_login) if user.last_login else None
         return token
 
 
