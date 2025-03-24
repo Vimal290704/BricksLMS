@@ -47,10 +47,10 @@ const HelpButton = ({ onPress }) => {
           onPress={handleHelpPress}
         >
           <LinearGradient
-            colors={['#ba68c8', '#ce93d8', '#e1bee7']}
+            colors={['#8a4fff', '#ba86fc', '#5a2ca0']}
             style={helpButtonGradient}
           >
-            <Text style={helpButtonText}>Clear Async Storage!</Text>
+            <Text style={helpButtonText}>Need Help?</Text>
           </LinearGradient>
         </TouchableOpacity>
       </Animated.View>

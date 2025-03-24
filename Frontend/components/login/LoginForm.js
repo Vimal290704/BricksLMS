@@ -67,7 +67,7 @@ const LoginForm = ({ onLogin }) => {
         <TextInput
           style={input}
           placeholder="Enter your school code"
-          placeholderTextColor="#c48eff"
+          placeholderTextColor="#8a4fff"
           value={schoolCode}
           onChangeText={setSchoolCode}
           onFocus={() => setIsSchoolCodeFocused(true)}
@@ -84,7 +84,7 @@ const LoginForm = ({ onLogin }) => {
         <TextInput
           style={input}
           placeholder="Enter your username"
-          placeholderTextColor="#c48eff"
+          placeholderTextColor="#8a4fff"
           value={username}
           onChangeText={setUsername}
           onFocus={() => setIsUsernameFocused(true)}
@@ -101,7 +101,7 @@ const LoginForm = ({ onLogin }) => {
         <TextInput
           style={input}
           placeholder="Enter your password"
-          placeholderTextColor="#c48eff"
+          placeholderTextColor="#8a4fff"
           value={password}
           onChangeText={setPassword}
           onFocus={() => setIsPasswordFocused(true)}
@@ -117,7 +117,7 @@ const LoginForm = ({ onLogin }) => {
           activeOpacity={0.8}
         >
           <LinearGradient
-            colors={['#9c27b0', '#ba68c8', '#ce93d8']}
+            colors={['#8a4fff', '#ba86fc', '#5a2ca0']}
             start={[0, 0]}
             end={[1, 0]}
             style={buttonGradient}

@@ -1,18 +1,54 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Animated } from 'react-native';
-import { useWelcomeAnimation } from '../../hooks/useAnimations';
 import { welcomeContainer, welcomeText, appName, hiTextContainer, hiText } from '../../styles/loginStyles';
 
 const WelcomeHeader = () => {
   // Animation values
   const welcomeAnim = useRef(new Animated.Value(0)).current;
   
-  // Animated letters for "Hi Student!"
-  const letters = "Hi Student!".split('');
-  const letterAnims = letters.map(() => useRef(new Animated.Value(0)).current);
+  // Typing animation for "Hi Student!"
+  const text = "Hi Student!";
+  const [displayedText, setDisplayedText] = useState("");
+  const [cursorVisible, setCursorVisible] = useState(true);
+  const [typingComplete, setTypingComplete] = useState(false);
   
-  // Custom hook to handle welcome animations
-  useWelcomeAnimation(welcomeAnim, letterAnims);
+  useEffect(() => {
+    // Welcome animation
+    Animated.timing(welcomeAnim, {
+      toValue: 1,
+      duration: 800,
+      useNativeDriver: true,
+    }).start();
+    
+    // Typing animation
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex < text.length) {
+        setDisplayedText(text.substring(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+        
+        // Hide cursor after a brief pause
+        setTimeout(() => {
+          setTypingComplete(true);
+          setCursorVisible(false);
+        }, 500);
+      }
+    }, 150); // Adjust typing speed here
+    
+    // Blink cursor while typing
+    const cursorInterval = setInterval(() => {
+      if (!typingComplete) {
+        setCursorVisible(prev => !prev);
+      }
+    }, 500);
+    
+    return () => {
+      clearInterval(typingInterval);
+      clearInterval(cursorInterval);
+    };
+  }, [typingComplete]);
 
   // Animation styles
   const welcomeStyle = {
@@ -33,27 +69,10 @@ const WelcomeHeader = () => {
       <Text style={appName}>BRICKS LMS</Text>
       
       <View style={hiTextContainer}>
-        {letters.map((letter, index) => (
-          <Animated.Text 
-            key={index}
-            style={[
-              hiText,
-              {
-                opacity: letterAnims[index],
-                transform: [
-                  {
-                    translateY: letterAnims[index].interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [20, 0],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
-            {letter}
-          </Animated.Text>
-        ))}
+        <Text style={hiText}>
+          {displayedText}
+          {cursorVisible && <Text style={{ color: '#fff' }}>|</Text>}
+        </Text>
       </View>
     </Animated.View>
   );

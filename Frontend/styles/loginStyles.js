@@ -2,10 +2,22 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
+// Light Purple Color Palette
+const colors = {
+  background: '#f5f5f5',
+  primary: '#8a4fff',
+  primaryLight: '#ba86fc',
+  primaryDark: '#5a2ca0',
+  text: '#333333',
+  textLight: '#666666',
+  inputBackground: '#f0f0f0',
+  inputBorder: '#d1d1d1',
+};
+
 // Main container styles
 export const container = {
   flex: 1,
-  backgroundColor: '#4a0072', // Ensure no white space at bottom
+  backgroundColor: colors.background,
 };
 
 export const background = {
@@ -14,11 +26,12 @@ export const background = {
   right: 0,
   top: 0,
   bottom: 0,
+  opacity: 0.1,
 };
 
 export const scrollContent = {
   flexGrow: 1,
-  paddingBottom: 80, // Space for help button
+  paddingBottom: 80,
 };
 
 export const content = {
@@ -38,14 +51,14 @@ export const welcomeContainer = {
 
 export const welcomeText = {
   fontSize: 20,
-  color: '#e1bee7',
+  color: colors.primaryDark,
   marginBottom: 5,
 };
 
 export const appName = {
   fontSize: 32,
   fontWeight: 'bold',
-  color: 'white',
+  color: colors.primary,
   marginBottom: 15,
 };
 
@@ -57,47 +70,47 @@ export const hiTextContainer = {
 export const hiText = {
   fontSize: 28,
   fontWeight: 'bold',
-  color: '#ffffff',
+  color: colors.primaryDark,
 };
 
 // Form styles
 export const formContainer = {
   width: '100%',
   maxWidth: 350,
-  backgroundColor: 'rgba(26, 0, 39, 0.7)',
+  backgroundColor: 'white',
   borderRadius: 20,
   padding: 25,
   elevation: 5,
-  shadowColor: '#000',
+  shadowColor: colors.primaryDark,
   shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.3,
+  shadowOpacity: 0.1,
   shadowRadius: 5,
 };
 
 export const inputContainer = {
-  backgroundColor: 'rgba(80, 0, 120, 0.6)',
+  backgroundColor: colors.inputBackground,
   borderRadius: 12,
   paddingHorizontal: 16,
   paddingVertical: 8,
   marginBottom: 15,
   borderWidth: 1,
-  borderColor: 'rgba(186, 104, 200, 0.3)',
+  borderColor: colors.inputBorder,
 };
 
 export const inputContainerFocused = {
-  borderColor: '#ce93d8',
+  borderColor: colors.primary,
   borderWidth: 2,
 };
 
 export const inputLabel = {
   fontSize: 12,
-  color: '#e1bee7',
+  color: colors.primaryDark,
   marginBottom: 4,
 };
 
 export const input = {
   fontSize: 16,
-  color: 'white',
+  color: colors.text,
   paddingVertical: 6,
 };
 
@@ -108,9 +121,9 @@ export const loginButton = {
   overflow: 'hidden',
   marginTop: 10,
   elevation: 3,
-  shadowColor: '#9c27b0',
+  shadowColor: colors.primary,
   shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.3,
+  shadowOpacity: 0.2,
   shadowRadius: 3,
 };
 
@@ -132,10 +145,12 @@ export const helpButtonWrapper = {
   bottom: 0,
   left: 0,
   right: 0,
-  backgroundColor: '#4a0072',
+  backgroundColor: 'white',
   paddingVertical: 20,
   paddingHorizontal: 20,
   alignItems: 'center',
+  borderTopWidth: 1,
+  borderTopColor: colors.inputBorder,
 };
 
 export const helpButtonContainer = {
@@ -148,9 +163,9 @@ export const helpButton = {
   borderRadius: 20,
   overflow: 'hidden',
   elevation: 3,
-  shadowColor: '#9c27b0',
+  shadowColor: colors.primary,
   shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.3,
+  shadowOpacity: 0.2,
   shadowRadius: 3,
 };
 
@@ -163,7 +178,7 @@ export const helpButtonGradient = {
 export const helpButtonText = {
   fontSize: 16,
   fontWeight: 'bold',
-  color: '#4a0072',
+  color: 'white',
 };
 
 // Bubble styles
@@ -171,12 +186,13 @@ export const bubblesContainer = {
   position: 'absolute',
   width: '100%',
   height: '100%',
+  opacity: 0.3,
 };
 
 export const bubble = {
   position: 'absolute',
   borderRadius: 50,
-  backgroundColor: 'rgba(206, 147, 216, 0.3)',
+  backgroundColor: colors.primaryLight,
 };
 
 export const bubble1 = {
@@ -191,7 +207,7 @@ export const bubble2 = {
   height: 70,
   left: '25%',
   top: '25%',
-  backgroundColor: 'rgba(186, 104, 200, 0.3)',
+  backgroundColor: colors.primary,
 };
 
 export const bubble3 = {
@@ -199,5 +215,5 @@ export const bubble3 = {
   height: 120,
   left: '40%',
   top: '70%',
-  backgroundColor: 'rgba(156, 39, 176, 0.3)',
+  backgroundColor: colors.primaryDark,
 };

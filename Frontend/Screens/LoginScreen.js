@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import AnimatedBackground from '../components/login/AnimatedBackground';
 import WelcomeHeader from '../components/login/WelcomeHeader';
 import LoginForm from '../components/login/LoginForm';
 import HelpButton from '../components/login/HelpButton';
 import { container, background, scrollContent } from '../styles/loginStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = () => {
   const handleLogin = (schoolCode, username, password) => {
@@ -15,12 +16,14 @@ const LoginScreen = () => {
   };
 
   const clearOnboarding = async () => {
+    console.log('Clear onboarding');
+    // Add your clear onboarding logic here
     try{
       await AsyncStorage.removeItem('isAppFirstLaunched');
     }catch(error){
-      console.log(error)
+      console.log(error);
     }
- }
+  };
 
   const handleHelpPress = () => {
     console.log('Help requested');
@@ -35,7 +38,7 @@ const LoginScreen = () => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
     >
       <LinearGradient
-        colors={['#4a0072', '#7b1fa2', '#9c27b0']}
+        colors={['#f0e5ff', '#e6d5ff', '#dac4ff']}
         style={background}
       />
       
