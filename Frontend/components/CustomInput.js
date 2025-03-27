@@ -28,6 +28,9 @@ const CustomInput = ({
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry && !isPasswordVisible}
+        autoCapitalize='none'
+        autoCorrect={false}
+        editable={editableCondition}
       />
       {secureTextEntry && (
         <TouchableOpacity 

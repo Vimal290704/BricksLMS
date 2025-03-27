@@ -7,31 +7,31 @@ import {
   Image, 
   KeyboardAvoidingView,
   Platform,
-  ScrollView
+  ScrollView,
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 import CustomInput from '../components/CustomInput';
-//import authService from '../services/authService';
+import { AuthService } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
+
 
 const LoginScreen = ({ navigation }) => {
   const [schoolCode, setSchoolCode] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {login , loginLoading} = useAuth();
 
   const handleLogin = async () => {
-    // try {
-    //   const response = await authService.login(schoolCode, username, password);
-      
-    //   if (response.success) {
-    //     // Navigate to Home screen
-    //     navigation.replace('Home');
-    //   } else {
-    //     // Handle login failure
-    //     Alert.alert('Login Failed', response.message);
-    //   }
-    // } catch (error) {
-    //   console.error('Login error:', error);
-    //   Alert.alert('Error', 'Something went wrong. Please try again.');
-    // }
+      if(!username || !password || !schoolCode){
+        alert('Please fill in all fields');
+        return;
+      }
+      try{
+        await AuthService.login(username , password);
+      }catch(error){
+        Alert.alert('Login Failed', error.response?.data?.detail || 'An error occurred during login');
+      }
   };
 
   return (
@@ -62,29 +62,41 @@ const LoginScreen = ({ navigation }) => {
             placeholder="School Code"
             value={schoolCode}
             onChangeText={setSchoolCode}
+            editableCondition={!loginLoading}
           />
           <CustomInput
             placeholder="Username"
             value={username}
             onChangeText={setUsername}
+            editableCondition={!loginLoading}
           />
           <CustomInput
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry={true}
+            editableCondition={!loginLoading}
           />
 
           <TouchableOpacity style={styles.forgotPassword}>
             <Text style={styles.forgotPasswordText}>Need Help?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          {loginLoading ?(
+            <ActivityIndicator
+            size="large" 
+            color="#007bff" 
+            style={styles.loadingIndicator} 
+            />
+          ):(
+            <TouchableOpacity 
             style={styles.loginButton}
             onPress={handleLogin}
           >
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
+          )}
+          
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -149,6 +161,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  loadingIndicator: {
+    marginVertical: 15
+  },
+
 });
 
 export default LoginScreen;

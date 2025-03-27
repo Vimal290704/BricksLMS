@@ -4,13 +4,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({ navigation }) => {
   const handleLogout = async () => {
-    try {
-      await AsyncStorage.removeItem('@userToken'); // Clear session token
-      Alert.alert('Logged Out', 'You have been logged out successfully.');
-      navigation.replace('Login'); // Redirect to login
-    } catch (error) {
-      Alert.alert('Error', 'Something went wrong. Try again.');
-    }
+    // try {
+    //   await AsyncStorage.removeItem('@userToken'); // Clear session token
+    //   Alert.alert('Logged Out', 'You have been logged out successfully.');
+    //   navigation.replace('Login'); // Redirect to login
+    // } catch (error) {
+    //   Alert.alert('Error', 'Something went wrong. Try again.');
+    // }
+    console.log('Logout CLicked');
   };
 
   return (
