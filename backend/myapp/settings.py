@@ -186,8 +186,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5), # we use refresh tokens to keep the user logged in
     "REFRESH_TOKEN_LIFETIME": timedelta(days=90), # we dont't want to login each time that's why we set 90 days
     "ROTATE_REFRESH_TOKENS": True, # we want to rotate the refresh token so that user do not have to log in after 90 days if they were active
-    # once the token is used we want to blacklist it so that it should not be used again otherwise it can be dangerous in terms of security 
-    "BLACKLIST_AFTER_ROTATION": True,
+    "BLACKLIST_AFTER_ROTATION": True, # once the token is used we want to blacklist it so that it should not be used again otherwise it can be dangerous in terms of security 
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
     "VERIFYING_KEY": "",
