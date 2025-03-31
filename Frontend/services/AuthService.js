@@ -3,7 +3,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'http://127.0.0.1:8000/api';
 
 export const AuthService = {
     //login method
@@ -17,6 +17,7 @@ export const AuthService = {
             if (!response.data?.access || !response.data?.refresh) {
                 throw new Error("Invalid login response. Missing access or refresh token.");
             }
+            console.log(response)
                 const {refresh , access} = response.data;
                 //decode the access token to get user details
                 const decodedUser = jwtDecode(access);

@@ -11,7 +11,8 @@ const CustomInput = ({
   placeholder, 
   value, 
   onChangeText, 
-  secureTextEntry = false 
+  secureTextEntry = false,
+  editable = true 
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -30,7 +31,7 @@ const CustomInput = ({
         secureTextEntry={secureTextEntry && !isPasswordVisible}
         autoCapitalize='none'
         autoCorrect={false}
-        editable={editableCondition}
+        editable={editable}
       />
       {secureTextEntry && (
         <TouchableOpacity 

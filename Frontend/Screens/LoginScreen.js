@@ -12,8 +12,8 @@ import {
   ActivityIndicator
 } from 'react-native';
 import CustomInput from '../components/CustomInput';
-import { AuthService } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
+import { AuthService } from '../services/authService';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -62,20 +62,20 @@ const LoginScreen = ({ navigation }) => {
             placeholder="School Code"
             value={schoolCode}
             onChangeText={setSchoolCode}
-            editableCondition={!loginLoading}
+            editable={!loginLoading}
           />
           <CustomInput
             placeholder="Username"
             value={username}
             onChangeText={setUsername}
-            editableCondition={!loginLoading}
+            editable={!loginLoading}
           />
           <CustomInput
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry={true}
-            editableCondition={!loginLoading}
+            editable={!loginLoading}
           />
 
           <TouchableOpacity style={styles.forgotPassword}>
