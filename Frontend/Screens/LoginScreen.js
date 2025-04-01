@@ -28,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
         return;
       }
       try{
-        await AuthService.login(username , password);
+        await login(username , password);
       }catch(error){
         Alert.alert('Login Failed', error.response?.data?.detail || 'An error occurred during login');
       }

@@ -1,81 +1,122 @@
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+// 🚀 Use the correct API URL for different environments
+const API_URL = "http://10.0.2.2:8000/api"; // For Android Emulator
+// const API_URL = "http://localhost:8000/api"; // For iOS Simulator
+// const API_URL = "http://192.168.X.X:8000/api"; // For real device (replace with actual local IP)
 
-const API_URL = 'http://127.0.0.1:8000/api';
+// 📌 Create an Axios instance for API calls
+const apiClient = axios.create({
+  baseURL: API_URL,
+  headers: { "Content-Type": "application/json" },
+});
+
+// 📌 Interceptor: Automatically refresh token if request is unauthorized (401)
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      console.log("Unauthorized! Trying to refresh token...");
+      try {
+        await AuthService.refreshToken();
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError.message);
+        await AuthService.logout();
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const AuthService = {
-    //login method
-    async login(username , password){
-        try{
-            const response = await axios.post(`${API_URL}/token/` , {
-                username ,
-                password
-            });
-            //check if response has access and refresh token
-            if (!response.data?.access || !response.data?.refresh) {
-                throw new Error("Invalid login response. Missing access or refresh token.");
-            }
-            console.log(response)
-                const {refresh , access} = response.data;
-                //decode the access token to get user details
-                const decodedUser = jwtDecode(access);
-                // Store the access token in SecureStore
-                await SecureStore.setItemAsync('accessToken' , access);
-                await SecureStore.setItemAsync('refreshToken' , refresh);
-                await SecureStore.setItemAsync('user' , JSON.stringify(decodedUser));
-            
-            return{
-                tokens: response.data,
-                user: decodedUser
-            };
-        }catch(error){
-            console.log('Login error:' , error.response?.data || error.message);
-            throw error;
-        }
-    },
+  // 🔹 Login Method
+  async login(email, password) {
+    try {
+      const response = await apiClient.post(`/token/`, { email, password });
 
-    getCurrentUser: async () => {
-        try{
-            const userString = await SecureStore.getItemAsync('user');
-            return userString ? JSON.parse(userString) : null;
-        }catch(error){
-            console.log('Get user error:' , error.response?.data || error.message);
-            return null;
-        }
-    },
+      if (!response.data?.access || !response.data?.refresh) {
+        throw new Error("Invalid login response. Missing access or refresh token.");
+      }
 
-    //refresh token method gives new access token
-    refreshToken: async () =>{
-        const refreshToken = await SecureStore.getItemAsync('refreshToken');
-        try{
-            const response = await axios.post(`${API_URL}/token/refresh`);
-            
-                const {access} = response.data;
-                const decodedUser = jwtDecode(access);
-                await SecureStore.setItemAsync('accessToken' , access);
-                await SecureStore.setItemAsync('user' , JSON.stringify(decodedUser));
-            
-            return{
-                access,
-                user: decodedUser
-            };
-        }catch(error){
-            await AuthService.logout();
-            console.log('Refresh token error:' , error.response?.data || error.message);
-            throw error;
-        }
-    },
-    //logout
-    logout: async () =>{
-        await SecureStore.deleteItemAsync('accessToken');
-        await SecureStore.deleteItemAsync('refreshToken');
-        await SecureStore.deleteItemAsync('user');
-    },
-    //check if user is authenticated
-    isAuthenticated: async () => {
-        const token = await SecureStore.getItemAsync('accessToken');
-        return !!token;
+      console.log("Login successful:", response.data);
+
+      const { refresh, access } = response.data;
+      const decodedUser = jwtDecode(access);
+
+      // Store tokens securely
+      await SecureStore.setItemAsync("accessToken", access);
+      await SecureStore.setItemAsync("refreshToken", refresh);
+      await SecureStore.setItemAsync("user", JSON.stringify(decodedUser));
+
+      return { tokens: response.data, user: decodedUser };
+    } catch (error) {
+      console.error("Login error:", error.response?.data || error.message);
+      throw error;
     }
-}
+  },
+
+  // 🔹 Get current user details
+  async getCurrentUser() {
+    try {
+      const userString = await SecureStore.getItemAsync("user");
+      return userString ? JSON.parse(userString) : null;
+    } catch (error) {
+      console.error("Get user error:", error.response?.data || error.message);
+      return null;
+    }
+  },
+
+  // 🔹 Refresh token method
+  async refreshToken() {
+    const refreshToken = await SecureStore.getItemAsync("refreshToken");
+
+    if (!refreshToken) {
+      console.error("No refresh token found. User needs to log in.");
+      throw new Error("No refresh token available");
+    }
+
+    try {
+      const response = await apiClient.post(`/token/refresh/`, { refresh: refreshToken });
+
+      if (!response.data?.access) {
+        throw new Error("Invalid refresh response. Missing new access token.");
+      }
+
+      const { access } = response.data;
+      const decodedUser = jwtDecode(access);
+
+      // Update stored tokens
+      await SecureStore.setItemAsync("accessToken", access);
+      await SecureStore.setItemAsync("user", JSON.stringify(decodedUser));
+
+      console.log("Token refreshed successfully!");
+
+      return { access, user: decodedUser };
+    } catch (error) {
+      console.error("Refresh token error:", error?.response?.data || error.message);
+
+      if (error.response?.status === 401) {
+        console.warn("Refresh token expired. Logging out...");
+        await AuthService.logout();
+      }
+
+      throw error;
+    }
+  },
+
+  // 🔹 Logout Method
+  async logout() {
+    await SecureStore.deleteItemAsync("accessToken");
+    await SecureStore.deleteItemAsync("refreshToken");
+    await SecureStore.deleteItemAsync("user");
+    console.log("User logged out.");
+  },
+
+  // 🔹 Check if user is authenticated
+  async isAuthenticated() {
+    const token = await SecureStore.getItemAsync("accessToken");
+    return !!token;
+  },
+};
