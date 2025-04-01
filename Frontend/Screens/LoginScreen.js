@@ -13,8 +13,6 @@ import {
 } from 'react-native';
 import CustomInput from '../components/CustomInput';
 import { useAuth } from '../context/AuthContext';
-import { AuthService } from '../services/authService';
-
 
 const LoginScreen = ({ navigation }) => {
   const [schoolCode, setSchoolCode] = useState('');

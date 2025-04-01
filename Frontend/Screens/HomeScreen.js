@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../context/AuthContext';
 
 const HomeScreen = ({ navigation }) => {
+  const { logout } = useAuth();
   const handleLogout = async () => {
-    // try {
-    //   await AsyncStorage.removeItem('@userToken'); // Clear session token
-    //   Alert.alert('Logged Out', 'You have been logged out successfully.');
-    //   navigation.replace('Login'); // Redirect to login
-    // } catch (error) {
-    //   Alert.alert('Error', 'Something went wrong. Try again.');
-    // }
-    console.log('Logout CLicked');
+    try {
+      await logout();
+    }catch (error) {
+      Alert.alert('Logout Failed', error.response?.data?.detail || 'An error occurred during logout');
+    }
+    
   };
 
   return (
