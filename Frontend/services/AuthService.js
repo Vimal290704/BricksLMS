@@ -2,18 +2,18 @@ import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-// 🚀 Use the correct API URL for different environments
+
 const API_URL = "http://10.0.2.2:8000/api"; // For Android Emulator
 // const API_URL = "http://localhost:8000/api"; // For iOS Simulator
 // const API_URL = "http://192.168.X.X:8000/api"; // For real device (replace with actual local IP)
 
-// 📌 Create an Axios instance for API calls
+// Create an Axios instance for API calls
 const apiClient = axios.create({
   baseURL: API_URL,
   headers: { "Content-Type": "application/json" },
 });
 
-// 📌 Interceptor: Automatically refresh token if request is unauthorized (401)
+// Interceptor: Automatically refresh token if request is unauthorized (401)
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -31,7 +31,7 @@ apiClient.interceptors.response.use(
 );
 
 export const AuthService = {
-  // 🔹 Login Method
+  // Login Method
   async login(email, password) {
     try {
       const response = await apiClient.post(`/token/`, { email, password });
@@ -57,7 +57,7 @@ export const AuthService = {
     }
   },
 
-  // 🔹 Get current user details
+  // Get current user details
   async getCurrentUser() {
     try {
       const userString = await SecureStore.getItemAsync("user");
@@ -68,7 +68,7 @@ export const AuthService = {
     }
   },
 
-  // 🔹 Refresh token method
+  // Refresh token method
   async refreshToken() {
     const refreshToken = await SecureStore.getItemAsync("refreshToken");
 
@@ -106,7 +106,7 @@ export const AuthService = {
     }
   },
 
-  // 🔹 Logout Method
+  // Logout Method
   async logout() {
     await SecureStore.deleteItemAsync("accessToken");
     await SecureStore.deleteItemAsync("refreshToken");
@@ -114,7 +114,7 @@ export const AuthService = {
     console.log("User logged out.");
   },
 
-  // 🔹 Check if user is authenticated
+  // Check if user is authenticated
   async isAuthenticated() {
     const token = await SecureStore.getItemAsync("accessToken");
     return !!token;
