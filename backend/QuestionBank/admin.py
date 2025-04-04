@@ -45,7 +45,6 @@ class QuestionAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "subject",
-                    "topics",
                     "question_type",
                     "question_text",
                     "difficulty",
