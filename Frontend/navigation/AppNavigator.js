@@ -1,9 +1,11 @@
+// AppNavigator.js - fixed
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, useColorScheme, View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 import AuthNavigator from './AuthNavigator';
+import DrawerNavigator from './DrawerNavigator';
 import MainNavigator from './MainNavigator';
 
 const LoadingScreen = () => {
@@ -57,12 +59,7 @@ const AppNavigatorContent = () => {
     return <LoadingScreen />;
   }
 
-  // Return different navigators based on authentication state
-  return isLoggedIn ? (
-    <MainNavigator />
-  ) : (
-    <AuthNavigator isFirstLaunch={isAppFirstLaunched} />
-  );
+  return isLoggedIn ? <DrawerNavigator /> : <AuthNavigator isFirstLaunch={isAppFirstLaunched} />;
 };
 
 export const AppNavigator = () => {

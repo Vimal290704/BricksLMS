@@ -1,3 +1,4 @@
+// MainNavigator.js - fixed
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,11 +17,11 @@ const MainNavigator = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
+          if (route.name === 'HomeTab') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Quiz') {
-            iconName = focused ? 'list' : 'list-outline';
-          } else if (route.name === 'Institute') {
+          } else if (route.name === 'QuizTab') {
+            iconName = focused ? 'reader' : 'reader-outline';
+          } else if (route.name === 'InstituteTab') {
             iconName = focused ? 'school' : 'school-outline';
           } else if (route.name === 'AI Help') {
             iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
@@ -28,8 +29,8 @@ const MainNavigator = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#5B218F',
-        tabBarInactiveTintColor: 'black', // darker version of the purple
+        tabBarActiveTintColor: '#815AD5',
+        tabBarInactiveTintColor: '#5D3E9E',
         tabBarStyle: {
           backgroundColor: '#ffffff',
           borderTopWidth: 0,
@@ -38,10 +39,25 @@ const MainNavigator = () => {
         }
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Quiz" component={QuizScreen} />
-      <Tab.Screen name="Institute" component={InstituteScreen} />
-      <Tab.Screen name="AI Help" component={AIassistScreen} />
+      <Tab.Screen 
+        name="HomeTab" 
+        component={HomeScreen} 
+        options={{ title: 'Home' }}
+      />
+      <Tab.Screen 
+        name="QuizTab" 
+        component={QuizScreen} 
+        options={{ title: 'Quiz' }}
+      />
+      <Tab.Screen 
+        name="InstituteTab" 
+        component={InstituteScreen} 
+        options={{ title: 'Institute' }}
+      />
+      <Tab.Screen 
+        name="AI Help" 
+        component={AIassistScreen} 
+      />
     </Tab.Navigator>
   );
 };
