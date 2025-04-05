@@ -4,8 +4,6 @@ from django.core.exceptions import ValidationError  # type: ignore
 
 
 class Topic(models.Model):
-    """Topics for categorizing questions"""
-
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
 
@@ -14,8 +12,6 @@ class Topic(models.Model):
 
 
 class Question(models.Model):
-    """Public questions available for all students to use in quizzes"""
-
     class QuestionType(models.TextChoices):
         MULTIPLE_CHOICE = "MCQ", "Multiple Choice"
         TRUE_FALSE = "TF", "True/False"
@@ -40,15 +36,14 @@ class Question(models.Model):
     )
     question_text = models.TextField()
     marks = models.PositiveIntegerField(default=1)
-    duration = models.PositiveIntegerField(help_text="Duration in seconds")
+    duration = models.PositiveIntegerField(help_text="Duration in minutes")
     difficulty = models.CharField(
         max_length=10,
         choices=Difficulty.choices,
         default=Difficulty.MEDIUM,
         db_index=True,
     )
-
-    # For short answer and essay questions
+    # This is for essay and short questions to store the correct answer
     model_answer = models.TextField(
         blank=True, help_text="Model answer or grading criteria"
     )
@@ -59,9 +54,11 @@ class Question(models.Model):
         null=True,
         related_name="contributed_questions",
     )
+
     is_verified = models.BooleanField(
         default=False, help_text="Verified by admin/teacher", db_index=True
     )
+
     times_used = models.PositiveIntegerField(
         default=0, help_text="Number of times used in quizzes"
     )
@@ -73,21 +70,17 @@ class Question(models.Model):
         return f"Q{self.question_id}: {self.question_text[:50]}"
 
     def clean(self):
-        """Custom validation for questions based on type"""
         super().clean()
-
         if self.question_type in [
             self.QuestionType.MULTIPLE_CHOICE,
             self.QuestionType.TRUE_FALSE,
             self.QuestionType.MATCHING,
         ]:
-            # Check if question has been saved (has an ID) before validating choices
             if self.question_id and not self.choices.exists():
                 raise ValidationError(
                     "This question type requires at least one choice."
                 )
 
-            # For multiple choice and true/false, ensure at least one correct answer
             if self.question_id and self.question_type in [
                 self.QuestionType.MULTIPLE_CHOICE,
                 self.QuestionType.TRUE_FALSE,
@@ -96,8 +89,6 @@ class Question(models.Model):
                     raise ValidationError(
                         "At least one choice must be marked as correct."
                     )
-
-            # For true/false, ensure exactly two choices
             if self.question_type == self.QuestionType.TRUE_FALSE and self.question_id:
                 if self.choices.count() != 2:
                     raise ValidationError(
@@ -114,8 +105,6 @@ class Question(models.Model):
 
 
 class QuestionChoice(models.Model):
-    """Choices for questions"""
-
     question = models.ForeignKey(
         Question, on_delete=models.CASCADE, related_name="choices"
     )
@@ -139,7 +128,6 @@ class QuestionChoice(models.Model):
         return self.choice_text
 
     def clean(self):
-        """Validate choice based on question type"""
         super().clean()
 
         if (

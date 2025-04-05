@@ -68,7 +68,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         choices=GENDER_CHOICES,
         default=MALE,
     )
-    last_login = models.DateTimeField(null=True, blank=True)
+    last_login = models.DateTimeField(blank=True, null=True) 
     created_at = models.DateTimeField(auto_now_add=True)
     school_id = models.CharField(max_length=20)
     avatar = models.OneToOneField(
