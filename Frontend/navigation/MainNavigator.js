@@ -1,4 +1,3 @@
-// MainNavigator.js - fixed
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,6 +5,7 @@ import HomeScreen from '../Screens/HomeScreen';
 import QuizScreen from '../Screens/QuizScreen';
 import InstituteScreen from '../Screens/InstituteScreen';
 import AIassistScreen from '../Screens/AIassistScreen';
+import QuizNavigator from './QuizNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +46,7 @@ const MainNavigator = () => {
       />
       <Tab.Screen 
         name="QuizTab" 
-        component={QuizScreen} 
+        component={QuizNavigator} 
         options={{ title: 'Quiz' }}
       />
       <Tab.Screen 

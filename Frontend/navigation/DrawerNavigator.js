@@ -11,10 +11,11 @@ import InstituteScreen from '../Screens/InstituteScreen';
 import AIassistScreen from '../Screens/AIassistScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 import ConnectScreen from '../Screens/ConnectScreen';
+import QuizNavigator from './QuizNavigator';
 
 const Drawer = createDrawerNavigator();
 
-// Custom drawer content component
+
 const CustomDrawerContent = (props) => {
   const { logout } = useAuth();
   
@@ -22,7 +23,7 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView {...props}>
       <View style={styles.drawerHeader}>
         <Image 
-          source={require('../assets/logo(1).png')} // Make sure to add your logo
+          source={require('../assets/logo(1).png')} 
           style={styles.logo}
         />
         <Text style={styles.appName}>BricksLMS</Text>
@@ -68,7 +69,7 @@ const DrawerNavigator = () => {
               <Image source={require('../assets/logo(1).png')} style={{ width: 50, height: 25 }} />
             </TouchableOpacity>
           ),
-          // Rest of your options remain the same
+          
         })}
       >
         <Drawer.Screen 
@@ -82,8 +83,7 @@ const DrawerNavigator = () => {
           }}
         />
       <Drawer.Screen 
-        name="Subjects" 
-        component={SubjectsScreen} // Replace with proper component when available
+    
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="book-outline" size={22} color={color} />
@@ -92,7 +92,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen 
         name="QuizDrawer" 
-        component={QuizScreen} // Replace with proper component when available
+        component={QuizNavigator} 
         options={{
           title: 'Quiz',
           drawerIcon: ({color}) => (
@@ -102,7 +102,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen 
         name="InstitueDrawer" 
-        component={InstituteScreen} // Replace with proper component when available
+        component={InstituteScreen} 
         options={{
           title: 'Institue',
           drawerIcon: ({color}) => (
@@ -112,7 +112,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen 
         name="Assist" 
-        component={AIassistScreen} // Replace with proper component when available
+        component={AIassistScreen} 
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="chatbubble-ellipses-outline" size={22} color={color} />
@@ -121,7 +121,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen 
         name="Insights" 
-        component={InstituteScreen} // Replace with proper component when available
+        component={InstituteScreen} 
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="analytics-outline" size={22} color={color} />
@@ -130,7 +130,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen 
         name="Profile" 
-        component={ProfileScreen} // Replace with proper component when available
+        component={ProfileScreen} 
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="person-outline" size={22} color={color} />
@@ -139,7 +139,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen 
         name="Connect" 
-        component={ConnectScreen} // Replace with proper component when available
+        component={ConnectScreen} 
         options={{
           drawerIcon: ({color}) => (
             <Ionicons name="link-outline" size={22} color={color} />
