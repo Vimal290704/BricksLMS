@@ -1,7 +1,7 @@
 from django.contrib import admin  # type: ignore
 from .models import Topic, Question, QuestionChoice
 
-from .models import Topic, Question, QuestionChoice, QuestionBank
+from .models import Topic, Question, QuestionChoice
 
 
 class QuestionChoiceInline(admin.TabularInline):
@@ -84,44 +84,3 @@ class QuestionAdmin(admin.ModelAdmin):
         if not change:
             obj.added_by = request.user
         super().save_model(request, obj, form, change)
-
-
-@admin.register(QuestionBank)
-class QuestionBankAdmin(admin.ModelAdmin):
-    list_display = ("name", "question_count", "created_at", "updated_at")
-    search_fields = ("name", "description")
-    filter_horizontal = ("questions",)
-    readonly_fields = ("created_at", "updated_at")
-
-    fieldsets = (
-        (
-            "Bank Information",
-            {
-                "fields": (
-                    "name",
-                    "description",
-                )
-            },
-        ),
-        (
-            "Questions",
-            {
-                "fields": ("questions",),
-            },
-        ),
-        (
-            "Metadata",
-            {
-                "fields": (
-                    "created_at",
-                    "updated_at",
-                ),
-                "classes": ("collapse",),
-            },
-        ),
-    )
-
-    def question_count(self, obj):
-        return obj.questions.count()
-
-    question_count.short_description = "Number of Questions"

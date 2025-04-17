@@ -146,22 +146,3 @@ class QuestionChoice(models.Model):
                 "Matching text should only be used for matching questions."
             )
 
-class QuestionBank(models.Model):
-    name = models.CharField(max_length=100, default="Main Question Bank")
-    description = models.TextField(blank=True)
-
-    questions = models.ManyToManyField(
-        Question,
-        related_name="banks",
-        blank=True,
-    )
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Question Bank"
-        verbose_name_plural = "Question Banks"
