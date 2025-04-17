@@ -82,72 +82,73 @@ const DrawerNavigator = () => {
             )
           }}
         />
-      <Drawer.Screen 
-    
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="book-outline" size={22} color={color} />
-          )
-        }}
-      />
-      <Drawer.Screen 
-        name="QuizDrawer" 
-        component={QuizNavigator} 
-        options={{
-          title: 'Quiz',
-          drawerIcon: ({color}) => (
-            <Ionicons name="help-circle-outline" size={22} color={color} />
-          )
-        }}
-      />
-      <Drawer.Screen 
-        name="InstitueDrawer" 
-        component={InstituteScreen} 
-        options={{
-          title: 'Institue',
-          drawerIcon: ({color}) => (
-            <Ionicons name="school-outline" size={22} color={color} />
-          )
-        }}
-      />
-      <Drawer.Screen 
-        name="Assist" 
-        component={AIassistScreen} 
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="chatbubble-ellipses-outline" size={22} color={color} />
-          )
-        }}
-      />
-      <Drawer.Screen 
-        name="Insights" 
-        component={InstituteScreen} 
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="analytics-outline" size={22} color={color} />
-          )
-        }}
-      />
-      <Drawer.Screen 
-        name="Profile" 
-        component={ProfileScreen} 
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="person-outline" size={22} color={color} />
-          )
-        }}
-      />
-      <Drawer.Screen 
-        name="Connect" 
-        component={ConnectScreen} 
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="link-outline" size={22} color={color} />
-          )
-        }}
-      />
-    </Drawer.Navigator>
-  );
+        <Drawer.Screen 
+          name="Subjects"  // Added missing name
+          component={SubjectsScreen}  // Make sure this component exists
+          options={{
+            drawerIcon: ({color}) => (
+              <Ionicons name="book-outline" size={22} color={color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="QuizDrawer" 
+          component={QuizNavigator} 
+          options={{
+            title: 'Quiz',
+            drawerIcon: ({color}) => (
+              <Ionicons name="help-circle-outline" size={22} color={color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="InstitueDrawer" 
+          component={InstituteScreen} 
+          options={{
+            title: 'Institute',  // Fixed spelling of "Institute"
+            drawerIcon: ({color}) => (
+              <Ionicons name="school-outline" size={22} color={color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="Assist" 
+          component={AIassistScreen} 
+          options={{
+            drawerIcon: ({color}) => (
+              <Ionicons name="chatbubble-ellipses-outline" size={22} color={color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="Insights" 
+          component={InstituteScreen} 
+          options={{
+            drawerIcon: ({color}) => (
+              <Ionicons name="analytics-outline" size={22} color={color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+          options={{
+            drawerIcon: ({color}) => (
+              <Ionicons name="person-outline" size={22} color={color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="Connect" 
+          component={ConnectScreen} 
+          options={{
+            drawerIcon: ({color}) => (
+              <Ionicons name="link-outline" size={22} color={color} />
+            )
+          }}
+        />
+      </Drawer.Navigator>
+    );
 };
 
 const styles = StyleSheet.create({

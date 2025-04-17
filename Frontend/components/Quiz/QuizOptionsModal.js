@@ -23,7 +23,7 @@ const QuizOptionsModal = ({ visible, onClose, onSelect }) => {
                 onPress={() => onSelect('custom')}
               >
                 <View style={styles.customIconContainer}>
-                  <Ionicons name="construct" size={24} color="#2196F3" />
+                  <Ionicons name="create-outline" size={24} color="#2196F3" />
                 </View>
                 <Text style={styles.optionText}>Create your custom quiz</Text>
               </TouchableOpacity>
