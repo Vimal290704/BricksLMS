@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-!528_-oq7g%x4m%pjf0728(=##5oe8+9q+2z9*!p6y#&ggr4$v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -43,9 +43,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "users",
+    "profiles",
     "api",
     "QuestionBank",
-    "Quiz"
+    "Quiz",
 ]
 
 MIDDLEWARE = [
@@ -132,8 +133,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 AUTH_USER_MODEL = "users.CustomUser"
+
 
 JAZZMIN_SETTINGS = {
     "site_title": "Django & React JWT Authentication ",
@@ -185,10 +186,14 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5), # we use refresh tokens to keep the user logged in
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=90), # we dont't want to login each time that's why we set 90 days
-    "ROTATE_REFRESH_TOKENS": True, # we want to rotate the refresh token so that user do not have to log in after 90 days if they were active
-    "BLACKLIST_AFTER_ROTATION": True, # once the token is used we want to blacklist it so that it should not be used again otherwise it can be dangerous in terms of security 
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=5
+    ),  # we use refresh tokens to keep the user logged in
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=90
+    ),  # we dont't want to login each time that's why we set 90 days
+    "ROTATE_REFRESH_TOKENS": True,  # we want to rotate the refresh token so that user do not have to log in after 90 days if they were active
+    "BLACKLIST_AFTER_ROTATION": True,  # once the token is used we want to blacklist it so that it should not be used again otherwise it can be dangerous in terms of security
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
     "VERIFYING_KEY": "",

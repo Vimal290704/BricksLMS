@@ -1,3 +1,4 @@
+# users/models.py
 from django.db import models  # type: ignore
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin  # type: ignore
 import uuid
@@ -68,7 +69,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         choices=GENDER_CHOICES,
         default=MALE,
     )
-    last_login = models.DateTimeField(blank=True, null=True) 
+    last_login = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     school_id = models.CharField(max_length=20)
     avatar = models.OneToOneField(
@@ -97,3 +98,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                 "image_url": self.avatar.image_url,
             }
         return None
+
+    def get_profile(self):
+        """Return the user's role-specific profile"""
+        if self.role == self.TEACHER:
+            return self.teacher_profile
+        elif self.role == self.STUDENT:
+            return self.student_profile
+        elif self.role == self.ADMIN:
+            return self.admin_profile
+        return None
+
+
