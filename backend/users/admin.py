@@ -1,8 +1,7 @@
-# users/admin.py
-from django.contrib import admin
-from django.db import models
-from django import forms
-from django.utils.html import format_html
+from django.contrib import admin # type: ignore
+from django.db import models # type: ignore
+from django import forms # type: ignore
+from django.utils.html import format_html # type: ignore
 from .models import CustomUser, Avatar
 from profiles.models import TeacherProfile, StudentProfile, AdminProfile
 

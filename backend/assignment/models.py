@@ -29,11 +29,9 @@ class Assignment(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        # Calculate total marks when saving
-        if not self.id:  # Only for new assignments
+        if not self.id:
             super().save(*args, **kwargs)
         else:
-            # Recalculate total marks for existing assignments
             self.total_marks = sum(question.marks for question in self.questions.all())
             super().save(*args, **kwargs)
 

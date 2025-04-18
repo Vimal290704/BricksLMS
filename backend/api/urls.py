@@ -1,6 +1,5 @@
-# api/urls.py
-from django.urls import path, include
-from rest_framework_simplejwt.views import TokenRefreshView
+from django.urls import path, include # type: ignore
+from rest_framework_simplejwt.views import TokenRefreshView # type: ignore
 from . import views
 
 urlpatterns = [

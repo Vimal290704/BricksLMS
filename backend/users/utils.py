@@ -1,5 +1,4 @@
-# users/utils.py
-from django.apps import apps
+from django.apps import apps # type: ignore
 
 
 def create_user_with_profile(

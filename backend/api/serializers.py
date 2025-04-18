@@ -1,5 +1,5 @@
-from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework import serializers # type: ignore
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer # type: ignore
 from users.models import CustomUser
 from users.serializer import AvatarSerializer
 from profiles.serializer import (

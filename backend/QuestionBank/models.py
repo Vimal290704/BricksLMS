@@ -43,7 +43,6 @@ class Question(models.Model):
         default=Difficulty.MEDIUM,
         db_index=True,
     )
-    # This is for essay and short questions to store the correct answer
     model_answer = models.TextField(
         blank=True, help_text="Model answer or grading criteria"
     )

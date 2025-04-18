@@ -1,7 +1,7 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.decorators import api_view, permission_classes  # type: ignore
+from rest_framework.permissions import IsAuthenticated  # type: ignore
+from rest_framework.response import Response  # type: ignore
+from rest_framework_simplejwt.views import TokenObtainPairView  # type: ignore
 from .serializers import MyTokenObtainPairSerializer, UserDetailSerializer
 
 

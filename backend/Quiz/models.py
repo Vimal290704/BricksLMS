@@ -4,13 +4,9 @@ from QuestionBank.models import Question
 
 
 class Quiz(models.Model):
-    """A collection of questions with a title and description"""
-
     quiz_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-
-    # Created by whom
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
